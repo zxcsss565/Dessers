@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <title>Сайт Desser</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle at center, #1a2a3a, #0a0f1c);
+      overflow-x: hidden;
+      color: white;
+    }
+
+    .container {
+      text-align: center;
+      margin-top: 120px;
+      padding: 40px;
+      border: 2px solid #00ffff;
+      border-radius: 20px;
+      box-shadow: 0 0 40px #00ffff88;
+      width: 80%;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    h1 {
+      font-size: 60px;
+      text-shadow: 0 0 15px #00ffff;
+      animation: pulse 3s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { text-shadow: 0 0 15px #00ffff; }
+      50% { text-shadow: 0 0 35px #00ffff; }
+    }
+
+    .btn {
+      margin: 10px;
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 30px;
+      background: #00ffff;
+      color: #000;
+      cursor: pointer;
+      box-shadow: 0 0 15px #00ffff;
+      transition: 0.3s;
+    }
+
+    .btn:hover {
+      background: white;
+      box-shadow: 0 0 25px #00ffff;
+      transform: scale(1.05);
+    }
+
+    .popup {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #111;
+      padding: 30px;
+      border-radius: 15px;
+      border: 2px solid #00ffff;
+      box-shadow: 0 0 20px #00ffff;
+      z-index: 1000;
+      display: none;
+      max-width: 80%;
+    }
+
+    .popup .close {
+      position: absolute;
+      top: 10px;
+      right: 15px;
+      cursor: pointer;
+      color: #fff;
+      font-size: 20px;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 900;
+      display: none;
+    }
+
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: #fff;
+      font-size: 16px;
+      pointer-events: none;
+      animation: fall linear infinite;
+    }
+
+    @keyframes fall {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="startContainer">
+    <h1>Добро пожаловать в Desser</h1>
+    <button class="btn" onclick="showMenu()">Старт</button>
+  </div>
+
+  <div class="container" id="mainMenu" style="display:none">
+    <button class="btn" onclick="showPopup('about')">О проекте</button>
+    <button class="btn" onclick="window.open('https://t.me/Desser222')">Покупка</button>
+    <button class="btn" onclick="showPopup('support')">Поддержка</button>
+    <button class="btn" onclick="showPopup('info')">О нас</button>
+  </div>
+
+  <div class="overlay" id="overlay" onclick="closePopup()"></div>
+
+  <div class="popup" id="popup">
+    <span class="close" onclick="closePopup()">✖</span>
+    <div id="popupContent"></div>
+  </div>
+
+  <script>
+    function showMenu() {
+      document.getElementById('startContainer').style.display = 'none';
+      document.getElementById('mainMenu').style.display = 'block';
+    }
+
+    function showPopup(type) {
+      const popup = document.getElementById('popup');
+      const overlay = document.getElementById('overlay');
+      const content = document.getElementById('popupContent');
+
+      if (type === 'about') {
+        content.innerHTML = "<p>Привет! Это сайт Desser, в этом сайте ты сможешь покупать старые аккаунты чтобы не проходить любую игру самому! Всё недорого и всё по огромной скидке.</p>";
+      } else if (type === 'support') {
+        content.innerHTML = "<p>Наша поддержка всегда на связи! У нас можно узнать как происходит покупка, как восстановить аккаунт, и задать любые вопросы.</p>";
+      } else if (type === 'info') {
+        content.innerHTML = "<p>Мы — сайт Desser, помогаем игрокам быстро начать с продвинутого уровня, покупая старые аккаунты по выгодной цене.</p>";
+      }
+
+      popup.style.display = 'block';
+      overlay.style.display = 'block';
+    }
+
+    function closePopup() {
+      document.getElementById('popup').style.display = 'none';
+      document.getElementById('overlay').style.display = 'none';
+    }
+
+    // Добавляем снежинки
+    function createSnowflake() {
+      const snowflake = document.createElement('div');
+      snowflake.classList.add('snowflake');
+      snowflake.textContent = '❄';
+      snowflake.style.left = Math.random() * window.innerWidth + 'px';
+      snowflake.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      snowflake.style.fontSize = (Math.random() * 10 + 10) + 'px';
+      document.body.appendChild(snowflake);
+      setTimeout(() => snowflake.remove(), 5000);
+    }
+    setInterval(createSnowflake, 200);
+  </script>
+</body>
+</html>
